@@ -2,18 +2,18 @@ package skypro.course2.examticketsgenerator.service;
 
 import org.springframework.stereotype.Service;
 import skypro.course2.examticketsgenerator.Question;
-import skypro.course2.examticketsgenerator.exception.AmountOutOfBoundQuestionsStorage;
+import skypro.course2.examticketsgenerator.exception.UnsupportedAmountException;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
 
-    private Random random = new Random();
     private final QuestionService questionService;
+    private Random random;
 
     public ExaminerServiceImpl(QuestionService questionService) {
         this.questionService = questionService;
@@ -22,19 +22,15 @@ public class ExaminerServiceImpl implements ExaminerService {
 
     @Override
     public Collection<Question> getQuestions(int amount) {
-        if (amount > questionService.getAll().size()) {
-            throw new AmountOutOfBoundQuestionsStorage();
+        if (amount > questionService.getAll().size() || amount < 1) {
+            throw new UnsupportedAmountException();
         }
-        List<Question> list = new ArrayList<>();
-        int count = 0;
-        while (count <= amount) {
-            if (list.contains(questionService.getRandomQuestion())) {
-                count--;
-            } else {
-                list.add(questionService.getRandomQuestion());
-                count++;
-            }
+        Set<Question> returnList = new HashSet<>();
+
+        while (returnList.size() < amount) {
+            Question random = questionService.getRandomQuestion();
+            returnList.add(random);
         }
-        return list;
+        return returnList;
     }
 }

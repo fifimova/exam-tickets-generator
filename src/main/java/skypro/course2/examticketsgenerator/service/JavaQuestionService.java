@@ -52,15 +52,6 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question getRandomQuestion() {
-//        int item = new Random().nextInt(questions.size());
-//        int i = 0;
-//        for (Question question: questions) {
-//            if (i == item) {
-//                return question;
-//            }
-//            i++;
-//        }
-//        return null;
         return questions.stream()
                 .skip(new Random().nextInt(questions.size()))
                 .findFirst()
