@@ -1,59 +1,46 @@
 package skypro.course2.examticketsgenerator.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import skypro.course2.examticketsgenerator.Question;
-import skypro.course2.examticketsgenerator.exception.QuestionAlreadyAddedException;
-import skypro.course2.examticketsgenerator.exception.QuestionNotFoundException;
+import skypro.course2.examticketsgenerator.repository.JavaQuestionRepository;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Random;
 
 @Service
 public class JavaQuestionService implements QuestionService {
 
-    private final Set<Question> questions;
+    private final JavaQuestionRepository javaQuestionRepository;
 
-    public JavaQuestionService() {
-        this.questions = new HashSet<>();
-
+    public JavaQuestionService(JavaQuestionRepository javaQuestionRepository) {
+        this.javaQuestionRepository = javaQuestionRepository;
     }
 
     @Override
     public Question add(String question, String answer) {
-        Question q = new Question(question, answer);
-        if (questions.contains(q)) {
-            throw new QuestionAlreadyAddedException();
-        }
-        questions.add(q);
-        return q;
+        return javaQuestionRepository.add(new Question(question, answer));
     }
 
     @Override
     public Question add(Question question) {
-        if (questions.contains(question)) {
-            throw new QuestionAlreadyAddedException();
-        }
-        questions.add(question);
-        return question;
+        return javaQuestionRepository.add(question);
     }
 
     @Override
     public Question remove(Question question) {
-        if (questions.contains(question)) {
-            questions.remove(question);
-            return question;
-        }
-        throw new QuestionNotFoundException();
+        return javaQuestionRepository.remove(question);
     }
 
     @Override
     public Collection<Question> getAll() {
-        return Collections.unmodifiableCollection(questions);
+        return javaQuestionRepository.getAll();
     }
 
     @Override
     public Question getRandomQuestion() {
-        return questions.stream()
-                .skip(new Random().nextInt(questions.size()))
+        return javaQuestionRepository.getAll().stream()
+                .skip(new Random().nextInt(javaQuestionRepository.getAll().size()))
                 .findFirst()
                 .orElse(null);
     }

@@ -1,36 +1,44 @@
 package skypro.course2.examticketsgenerator.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import skypro.course2.examticketsgenerator.Question;
 import skypro.course2.examticketsgenerator.exception.UnsupportedAmountException;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
 
-    private final QuestionService questionService;
-    private Random random;
+    private final QuestionService javaQuestionService;
+    private final QuestionService mathQuestionService;
+    private Random rand;
 
-    public ExaminerServiceImpl(QuestionService questionService) {
-        this.questionService = questionService;
+    public ExaminerServiceImpl(@Qualifier("javaQuestionService") QuestionService javaQuestionService,
+                               @Qualifier("mathQuestionService") QuestionService mathQuestionService) {
+        this.javaQuestionService = javaQuestionService;
+        this.mathQuestionService = mathQuestionService;
     }
-
 
     @Override
     public Collection<Question> getQuestions(int amount) {
-        if (amount > questionService.getAll().size() || amount < 1) {
+        if (amount > javaQuestionService.getAll().size() + mathQuestionService.getAll().size() || amount < 1) {
             throw new UnsupportedAmountException();
         }
         Set<Question> returnList = new HashSet<>();
 
         while (returnList.size() < amount) {
-            Question random = questionService.getRandomQuestion();
-            returnList.add(random);
+            Question random = getMathOrJavaQuestion();
+            if (random != null) {
+                returnList.add(random);
+            }
         }
         return returnList;
+    }
+
+    private Question getMathOrJavaQuestion() {
+        List<QuestionService> list = new ArrayList<>(List.of(javaQuestionService, mathQuestionService));
+        QuestionService randService = list.get(rand.nextInt(list.size()));
+        return randService.getRandomQuestion();
     }
 }

@@ -11,12 +11,12 @@ import skypro.course2.examticketsgenerator.service.QuestionService;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/java")
-public class JavaQuestionController {
+@RequestMapping("/math")
+public class MathQuestionController {
 
     private final QuestionService questionService;
 
-    public JavaQuestionController(@Qualifier("javaQuestionService") QuestionService questionService) {
+    public MathQuestionController(@Qualifier("mathQuestionService") QuestionService questionService) {
         this.questionService = questionService;
     }
 
@@ -37,4 +37,3 @@ public class JavaQuestionController {
         return questionService.getAll();
     }
 }
-
