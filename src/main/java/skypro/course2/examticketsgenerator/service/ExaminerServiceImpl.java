@@ -12,13 +12,14 @@ public class ExaminerServiceImpl implements ExaminerService {
 
     private final QuestionService javaQuestionService;
     private final QuestionService mathQuestionService;
-    private Random rand;
+    private final Random rand = new Random();
 
     public ExaminerServiceImpl(@Qualifier("javaQuestionService") QuestionService javaQuestionService,
                                @Qualifier("mathQuestionService") QuestionService mathQuestionService) {
         this.javaQuestionService = javaQuestionService;
         this.mathQuestionService = mathQuestionService;
     }
+
 
     @Override
     public Collection<Question> getQuestions(int amount) {
