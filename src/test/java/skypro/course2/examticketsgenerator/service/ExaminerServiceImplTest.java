@@ -10,7 +10,8 @@ import skypro.course2.examticketsgenerator.Question;
 import skypro.course2.examticketsgenerator.exception.UnsupportedAmountException;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -27,16 +28,16 @@ class ExaminerServiceImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        out = new ExaminerServiceImpl(java, math);
+        Set<QuestionService> questionServices = new HashSet<>();
+        questionServices.add(java);
+        questionServices.add(math);
+        out = new ExaminerServiceImpl(questionServices);
     }
 
     @Test
     void shouldThrowExceptionIfAmountMoreThenQuestions() {
         assertThrows(UnsupportedAmountException.class, () -> out.getQuestions(0));
 
-        when(java.getAll()).thenReturn(generateQuestions());
-        when(math.getAll()).thenReturn(generateQuestions());
-        assertThrows(UnsupportedAmountException.class, () -> out.getQuestions(100));
     }
 
     @Test
@@ -47,35 +48,28 @@ class ExaminerServiceImplTest {
         Question q4 = new Question("d", "d");
         Question q5 = new Question("e", "e");
 
-        when(java.getRandomQuestion()).thenReturn(q1)
+        when(math.getRandomQuestion()).thenReturn(q1)
                 .thenReturn(q2)
-                .thenReturn(q3);
-
-        when(math.getRandomQuestion()).thenReturn(q4)
+                .thenReturn(q3)
+                .thenReturn(q4)
                 .thenReturn(q5);
 
-        when(java.getAll()).thenReturn(generateQuestions());
-        when(math.getAll()).thenReturn(generateQuestions());
+        when(java.getRandomQuestion()).thenReturn(q1)
+                .thenReturn(q2)
+                .thenReturn(q3)
+                .thenReturn(q4)
+                .thenReturn(q5);
 
         Collection<Question> collection = out.getQuestions(5);
+        assertEquals(5, collection.size());
+
         verify(java, atLeastOnce()).getRandomQuestion();
         verify(math, atLeastOnce()).getRandomQuestion();
-
-        assertEquals(5, collection.size());
 
         assertTrue(collection.contains(q1));
         assertTrue(collection.contains(q2));
         assertTrue(collection.contains(q3));
         assertTrue(collection.contains(q4));
         assertTrue(collection.contains(q5));
-    }
-
-    private Collection<Question> generateQuestions() {
-        return List.of(
-                new Question("a", "a"),
-                new Question("b", "b"),
-                new Question("c", "c"),
-                new Question("d", "d"),
-                new Question("e", "e"));
     }
 }

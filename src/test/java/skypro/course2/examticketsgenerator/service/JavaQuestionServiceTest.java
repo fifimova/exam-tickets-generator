@@ -88,5 +88,4 @@ class JavaQuestionServiceTest {
                 new Question("b", "b"),
                 new Question("c", "c"));
     }
-
 }
