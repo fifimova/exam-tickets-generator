@@ -1,7 +1,7 @@
 package skypro.course2.examticketsgenerator.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import skypro.course2.examticketsgenerator.Question;
 import skypro.course2.examticketsgenerator.service.ExaminerService;
@@ -17,8 +17,8 @@ public class ExamController {
         this.examinerService = examinerService;
     }
 
-    @GetMapping("/random")
-    public Collection<Question> getQuestions(@RequestParam("amount") int amount) {
+    @GetMapping("/get/{amount}")
+    public Collection<Question> getQuestions(@PathVariable("amount") int amount) {
         return examinerService.getQuestions(amount);
     }
 }

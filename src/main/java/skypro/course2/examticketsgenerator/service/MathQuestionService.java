@@ -1,10 +1,9 @@
 package skypro.course2.examticketsgenerator.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import skypro.course2.examticketsgenerator.Question;
-import skypro.course2.examticketsgenerator.repository.MathQuestionRepository;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
@@ -12,65 +11,55 @@ import java.util.Random;
 @Service
 public class MathQuestionService implements QuestionService {
 
-    private final MathQuestionRepository mathQuestionRepository;
-    private Random rand = new Random();
+    private final Random rand;
+    private final List<MathOperation> operations;
 
-    public MathQuestionService(MathQuestionRepository mathQuestionRepository) {
-        this.mathQuestionRepository = mathQuestionRepository;
+    @Autowired
+    public MathQuestionService() {
+        this.rand = new Random();
+        operations = List.of(
+                (num1, num2) -> new Question(num1 + "+" + num2, String.valueOf(num1 + num2)),
+                (num1, num2) -> new Question(num1 + "-" + num2, String.valueOf(num1 - num2)),
+                (num1, num2) -> new Question(num1 + "*" + num2, String.valueOf(num1 * num2)),
+                (num1, num2) -> new Question(num1 + "/" + num2, String.valueOf(num1 / num2))
+        );
+    }
+
+    protected MathQuestionService(Random rand) {
+        this.rand = rand;
+        operations = List.of(
+                (num1, num2) -> new Question(num1 + "+" + num2, String.valueOf(num1 + num2)),
+                (num1, num2) -> new Question(num1 + "-" + num2, String.valueOf(num1 - num2)),
+                (num1, num2) -> new Question(num1 + "*" + num2, String.valueOf(num1 * num2)),
+                (num1, num2) -> new Question(num1 + "/" + num2, String.valueOf(num1 / num2))
+        );
     }
 
     @Override
     public Question add(String question, String answer) {
-        return mathQuestionRepository.add(new Question(question, answer));
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Question add(Question question) {
-        return mathQuestionRepository.add(question);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Question remove(Question question) {
-        return mathQuestionRepository.remove(question);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Collection<Question> getAll() {
-        return mathQuestionRepository.getAll();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Question getRandomQuestion() {
-        Question question = new Question(null, null);
-        int num1 = rand.nextInt(Integer.MAX_VALUE);
-        int num2 = rand.nextInt(Integer.MAX_VALUE);
-        int answer = 0;
-
-        List<Character> symbols = new ArrayList<>(List.of('+', '-', '*', '/'));
-        char randChar = symbols.get(rand.nextInt(symbols.size()));
-
-        String finalQuestion = String.valueOf(num1) + randChar + num2;
-
-        if (randChar == '+') {
-            answer = num1 + num2;
-            question.setQuestion(finalQuestion);
-            question.setAnswer(" = " + answer);
-            return question;
-        } else if (randChar == '-') {
-            answer = num1 - num2;
-            question.setQuestion(finalQuestion);
-            question.setAnswer(" = " + answer);
-            return question;
-        } else if (randChar == '*') {
-            answer = num1 * num2;
-            question.setQuestion(finalQuestion);
-            question.setAnswer(" = " + answer);
-            return question;
-        } else {
-            answer = num1 / num2;
-            question.setQuestion(finalQuestion);
-            question.setAnswer(" = " + answer);
-            return question;
-        }
+        Integer randInx = rand.nextInt(operations.size());
+        Integer num1 = rand.nextInt(Integer.MAX_VALUE);
+        Integer num2 = rand.nextInt(Integer.MAX_VALUE);
+        return operations.get(randInx).generateQuestion(num1, num2);
     }
 }

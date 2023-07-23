@@ -11,6 +11,7 @@ import skypro.course2.examticketsgenerator.repository.JavaQuestionRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,13 +22,15 @@ class JavaQuestionServiceTest {
 
     @Mock
     private JavaQuestionRepository javaRepositoryMock;
+    @Mock
+    private Random rand;
 
     private QuestionService out;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        out = new JavaQuestionService(javaRepositoryMock);
+        out = new JavaQuestionService(javaRepositoryMock, rand);
     }
 
     @Test
@@ -80,6 +83,10 @@ class JavaQuestionServiceTest {
 
         assertTrue(generateQuestions().contains(out.getRandomQuestion()));
         verify(javaRepositoryMock, times(2)).getAll();
+
+        when(rand.nextInt(anyInt())).thenReturn(2);
+        Question question = out.getRandomQuestion();
+        assertEquals(generateQuestions().get(2), question);
     }
 
     private List<Question> generateQuestions() {

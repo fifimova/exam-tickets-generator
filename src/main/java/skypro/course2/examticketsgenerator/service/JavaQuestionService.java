@@ -1,5 +1,6 @@
 package skypro.course2.examticketsgenerator.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import skypro.course2.examticketsgenerator.Question;
 import skypro.course2.examticketsgenerator.repository.JavaQuestionRepository;
@@ -11,9 +12,17 @@ import java.util.Random;
 public class JavaQuestionService implements QuestionService {
 
     private final JavaQuestionRepository javaQuestionRepository;
+    private final Random rand;
 
+    @Autowired
     public JavaQuestionService(JavaQuestionRepository javaQuestionRepository) {
         this.javaQuestionRepository = javaQuestionRepository;
+        this.rand = new Random();
+    }
+
+    protected JavaQuestionService(JavaQuestionRepository javaQuestionRepository, Random rand) {
+        this.javaQuestionRepository = javaQuestionRepository;
+        this.rand = rand;
     }
 
     @Override
@@ -39,7 +48,7 @@ public class JavaQuestionService implements QuestionService {
     @Override
     public Question getRandomQuestion() {
         return javaQuestionRepository.getAll().stream()
-                .skip(new Random().nextInt(javaQuestionRepository.getAll().size()))
+                .skip(rand.nextInt(javaQuestionRepository.getAll().size()))
                 .findFirst()
                 .orElse(null);
     }

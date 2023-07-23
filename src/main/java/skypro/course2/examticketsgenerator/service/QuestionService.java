@@ -6,7 +6,7 @@ import skypro.course2.examticketsgenerator.Question;
 import java.util.Collection;
 
 public interface QuestionService {
-    Question add(String question, String answer) throws MethodNotAllowedException;
+    Question add(String question, String answer);
 
     Question add(Question question);
 
