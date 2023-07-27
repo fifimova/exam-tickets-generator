@@ -18,21 +18,21 @@ public class MathQuestionController {
         this.questionService = questionService;
     }
 
-    @PostMapping("/add")
+    @GetMapping("/add")
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public Question addQuestion(@RequestParam("question") String question,
                                 @RequestParam("answer") String answer) {
         return questionService.add(question, answer);
     }
 
-    @PostMapping("/remove")
+    @GetMapping("/remove")
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public Question removeQuestion(@RequestParam("question") String question,
                                    @RequestParam("answer") String answer) {
         return questionService.remove(new Question(question, answer));
     }
 
-    @PostMapping
+    @GetMapping
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public Collection<Question> getQuestions() {
         return questionService.getAll();
