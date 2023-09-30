@@ -1,7 +1,7 @@
 package skypro.course2.examticketsgenerator.repository;
 
 import org.springframework.stereotype.Repository;
-import skypro.course2.examticketsgenerator.Question;
+import skypro.course2.examticketsgenerator.model.Question;
 import skypro.course2.examticketsgenerator.exception.QuestionAlreadyAddedException;
 import skypro.course2.examticketsgenerator.exception.QuestionNotFoundException;
 

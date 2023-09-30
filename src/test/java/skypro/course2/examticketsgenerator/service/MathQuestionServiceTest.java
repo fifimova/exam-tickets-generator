@@ -1,16 +1,11 @@
 package skypro.course2.examticketsgenerator.service;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import skypro.course2.examticketsgenerator.Question;
-import skypro.course2.examticketsgenerator.repository.MathQuestionRepository;
+import skypro.course2.examticketsgenerator.model.Question;
 
-import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

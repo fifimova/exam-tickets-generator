@@ -1,11 +1,8 @@
 package skypro.course2.examticketsgenerator.controller;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import skypro.course2.examticketsgenerator.Question;
+import org.springframework.web.bind.annotation.*;
+import skypro.course2.examticketsgenerator.model.Question;
 import skypro.course2.examticketsgenerator.service.QuestionService;
 
 import java.util.Collection;
@@ -20,13 +17,13 @@ public class JavaQuestionController {
         this.questionService = questionService;
     }
 
-    @GetMapping("/add")
+    @PostMapping
     public Question addQuestion(@RequestParam("question") String question,
                                 @RequestParam("answer") String answer) {
         return questionService.add(question, answer);
     }
 
-    @GetMapping("/remove")
+    @DeleteMapping
     public Question removeQuestion(@RequestParam("question") String question,
                                    @RequestParam("answer") String answer) {
         return questionService.remove(new Question(question, answer));

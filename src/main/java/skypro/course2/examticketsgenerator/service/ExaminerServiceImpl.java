@@ -1,7 +1,7 @@
 package skypro.course2.examticketsgenerator.service;
 
 import org.springframework.stereotype.Service;
-import skypro.course2.examticketsgenerator.Question;
+import skypro.course2.examticketsgenerator.model.Question;
 import skypro.course2.examticketsgenerator.exception.UnsupportedAmountException;
 
 import java.util.*;

@@ -1,7 +1,6 @@
 package skypro.course2.examticketsgenerator.service;
 
-import org.springframework.web.server.MethodNotAllowedException;
-import skypro.course2.examticketsgenerator.Question;
+import skypro.course2.examticketsgenerator.model.Question;
 
 import java.util.Collection;
 
