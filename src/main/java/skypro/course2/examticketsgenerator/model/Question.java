@@ -1,4 +1,4 @@
-package skypro.course2.examticketsgenerator;
+package skypro.course2.examticketsgenerator.model;
 
 import java.util.Objects;
 

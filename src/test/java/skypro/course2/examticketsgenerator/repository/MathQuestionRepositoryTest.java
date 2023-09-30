@@ -2,7 +2,7 @@ package skypro.course2.examticketsgenerator.repository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import skypro.course2.examticketsgenerator.Question;
+import skypro.course2.examticketsgenerator.model.Question;
 import skypro.course2.examticketsgenerator.exception.QuestionAlreadyAddedException;
 import skypro.course2.examticketsgenerator.exception.QuestionNotFoundException;
 

@@ -2,7 +2,7 @@ package skypro.course2.examticketsgenerator.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import skypro.course2.examticketsgenerator.Question;
+import skypro.course2.examticketsgenerator.model.Question;
 
 import java.util.Collection;
 import java.util.List;

@@ -1,6 +1,6 @@
 package skypro.course2.examticketsgenerator.repository;
 
-import skypro.course2.examticketsgenerator.Question;
+import skypro.course2.examticketsgenerator.model.Question;
 
 import java.util.Collection;
 
