@@ -43,7 +43,7 @@ The `JavaQuestionController` is a RESTful controller that handles Java-related q
 - /java for Java-related questions.
 - /get/{amount} to get a specified amount of random questions.
 
-##Configuration
+## Configuration
 The application uses a default configuration with an embedded servlet container. The context path is set to /exam.
 
 Feel free to customize the code or configuration according to your needs. 
