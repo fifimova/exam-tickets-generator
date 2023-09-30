@@ -2,32 +2,30 @@
 
 This study project is a Java-based application that allows you to create, store, delete questions, and retrieve them in a specified quantity. Additionally, it generates random mathematical examples and adds them to the question list when the number of questions is provided.
 
-## Table of Contents
+## Structure
 - [Java Questions](#java-questions)
 - [Math Questions](#math-questions)
 - [Examiner Service](#examiner-service)
 - [Exam Controller](#exam-controller)
 - [Java Question Controller](#java-question-controller)
-- [Usage](#usage)
-- [Configuration](#configuration)
 
-## Java Questions
+### Java Questions
 
 The `JavaQuestionService` class handles Java-related questions. It provides functionality to add, remove, and get Java questions. The questions are stored in the `JavaQuestionRepository`. You can also get a random Java question using the `getRandomQuestion` method.
 
-## Math Questions
+### Math Questions
 
 The `MathQuestionService` class generates random mathematical questions based on addition, subtraction, multiplication, and division. These questions are not stored but generated on-demand using the `getRandomQuestion` method.
 
-## Examiner Service
+### Examiner Service
 
 The `ExaminerServiceImpl` class is responsible for retrieving a specified amount of questions. It collaborates with different `QuestionService` implementations, such as `JavaQuestionService` and `MathQuestionService`, to get questions.
 
-## Exam Controller
+### Exam Controller
 
 The `ExamController` provides a RESTful API endpoint `/get/{amount}` to retrieve a specified amount of questions using the `ExaminerService`. The result is a collection of questions.
 
-## Java Question Controller
+### Java Question Controller
 
 The `JavaQuestionController` is a RESTful controller that handles Java-related questions. It supports operations such as adding, removing, and retrieving Java questions. The endpoint for this controller is `/java`.
 
